@@ -1,0 +1,36 @@
+name: Check
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Validate every app
+        run: npm run check
+      # Every pinned image must exist on its registry: a typo or a deleted tag
+      # would only show when someone installs the app.
+      - name: Check that the images exist
+        run: |
+          node -e '
+            const fs = require("fs")
+            for (const id of fs.readdirSync("apps")) {
+              const m = JSON.parse(fs.readFileSync(`apps/${id}/manifest.json`, "utf8"))
+              for (const img of [m.image, ...(m.services ?? []).map(s => s.image)]) console.log(img)
+            }' | sort -u | while read -r image; do
+            echo "::group::$image"
+            docker manifest inspect "$image" > /dev/null || { echo "::error::$image cannot be found"; exit 1; }
+            echo "::endgroup::"
+          done

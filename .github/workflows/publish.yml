@@ -1,0 +1,42 @@
+name: Publish
+
+# Every change on main publishes a new catalog: a release whose assets are
+# catalog.json and its signature, at the stable "latest" URL HSI reads:
+#   https://github.com/kittyruntime/home-server-interface-apps/releases/latest/download/catalog.json
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: publish
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    # Only main is ever signed, even when started by hand.
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    # The signing key is a secret of this environment, limited to main.
+    environment: catalog
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Build and sign
+        env:
+          CATALOG_SIGNING_KEY: ${{ secrets.CATALOG_SIGNING_KEY }}
+        run: npm run build
+      - name: Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          version=$(node -p 'require("./dist/catalog.json").version')
+          gh release create "catalog-$version" dist/catalog.json dist/catalog.json.sig \
+            --title "Catalog $version" --notes "$(git log -1 --format=%s)" --latest

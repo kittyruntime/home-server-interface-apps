@@ -1,0 +1,17 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended"],
+  "description": "Proposes pull requests that bump the pinned images of the apps.",
+  "enabledManagers": ["custom.regex"],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "managerFilePatterns": ["/^apps/[^/]+/manifest\\.json$/"],
+      "matchStrings": ["\"image\":\\s*\"(?<depName>[^\":@]+(?::\\d+)?/[^\":@]+|[^\":@/]+):(?<currentValue>[^\"@]+)\""],
+      "datasourceTemplate": "docker"
+    }
+  ],
+  "packageRules": [
+    { "matchManagers": ["custom.regex"], "groupName": null, "commitMessageTopic": "{{depName}}" }
+  ]
+}

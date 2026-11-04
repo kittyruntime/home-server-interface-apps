@@ -1,0 +1,16 @@
+{
+  "name": "home-server-interface-apps",
+  "private": true,
+  "description": "The App Store catalog of Home Server Interface (HSI)",
+  "license": "MPL-2.0",
+  "type": "module",
+  "scripts": {
+    "check": "node scripts/build.mjs",
+    "build": "node scripts/build.mjs --sign"
+  },
+  "devDependencies": {
+    "ajv": "8.17.1",
+    "ajv-formats": "3.0.1",
+    "fast-xml-parser": "4.5.3"
+  }
+}
