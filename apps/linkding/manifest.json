@@ -1,0 +1,53 @@
+{
+  "id": "linkding",
+  "name": "linkding",
+  "category": "Productivity",
+  "added": "2026-11-23",
+  "tagline": "A minimal bookmark manager that is quick to search.",
+  "description": "linkding keeps your bookmarks with tags and notes, finds them in an instant, can archive the pages, and adds new ones from its browser extension.",
+  "website": "https://linkding.link",
+  "image": "sissbruecker/linkding:1.47.0",
+  "changelog": "https://github.com/sissbruecker/linkding/releases",
+  "license": "MIT",
+  "source": "https://github.com/sissbruecker/linkding",
+  "docs": "https://linkding.link/installation/",
+  "postInstall": [
+    "Sign in with the administrator name and password chosen at install.",
+    "Install the browser extension or the bookmarklet from Settings, Integrations, to save pages as you browse."
+  ],
+  "webUiPort": 9090,
+  "ports": [
+    {
+      "container": 9090,
+      "protocol": "tcp",
+      "label": "Web UI",
+      "hostDefault": 9090
+    }
+  ],
+  "env": [
+    {
+      "key": "LD_SUPERUSER_NAME",
+      "default": "admin",
+      "prompt": "Administrator name",
+      "required": true
+    },
+    {
+      "key": "LD_SUPERUSER_PASSWORD",
+      "prompt": "Administrator password",
+      "secret": true,
+      "required": true
+    },
+    {
+      "key": "TZ",
+      "default": "Etc/UTC",
+      "prompt": "Time zone (e.g. Europe/Paris)"
+    }
+  ],
+  "volumes": [
+    {
+      "target": "/etc/linkding/data",
+      "label": "Data",
+      "suggest": "named"
+    }
+  ]
+}

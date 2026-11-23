@@ -1,0 +1,51 @@
+{
+  "id": "freshrss",
+  "name": "FreshRSS",
+  "category": "Productivity",
+  "added": "2026-11-23",
+  "tagline": "Follow websites and news through RSS, in one place.",
+  "description": "FreshRSS gathers the articles of the sites you follow, refreshes them on a schedule, and lets you read them on the web or in any app that speaks the Google Reader or Fever API.",
+  "website": "https://freshrss.org",
+  "image": "freshrss/freshrss:1.31.0",
+  "changelog": "https://github.com/FreshRSS/FreshRSS/releases",
+  "license": "AGPL-3.0",
+  "source": "https://github.com/FreshRSS/FreshRSS",
+  "docs": "https://freshrss.github.io/FreshRSS/",
+  "postInstall": [
+    "Open it and follow the setup: choose SQLite as the database, then create the administrator account.",
+    "For mobile apps, allow API access in Settings, Authentication, then set an API password in your profile."
+  ],
+  "webUiPort": 80,
+  "ports": [
+    {
+      "container": 80,
+      "protocol": "tcp",
+      "label": "Web UI",
+      "hostDefault": 8083
+    }
+  ],
+  "env": [
+    {
+      "key": "CRON_MIN",
+      "default": "3,33",
+      "prompt": "Minutes of each hour when feeds refresh"
+    },
+    {
+      "key": "TZ",
+      "default": "Etc/UTC",
+      "prompt": "Time zone (e.g. Europe/Paris)"
+    }
+  ],
+  "volumes": [
+    {
+      "target": "/var/www/FreshRSS/data",
+      "label": "Data",
+      "suggest": "named"
+    },
+    {
+      "target": "/var/www/FreshRSS/extensions",
+      "label": "Extensions",
+      "suggest": "named"
+    }
+  ]
+}
