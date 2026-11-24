@@ -1,0 +1,46 @@
+{
+  "id": "mealie",
+  "name": "Mealie",
+  "category": "Productivity",
+  "added": "2026-11-23",
+  "tagline": "Recipes, meal plans and shopping lists for the household.",
+  "description": "Mealie keeps your recipes, imports new ones from a web page in one click, plans the week's meals and builds the shopping list, shared with everyone at home.",
+  "website": "https://mealie.io",
+  "image": "ghcr.io/mealie-recipes/mealie:v3.31.0",
+  "changelog": "https://github.com/mealie-recipes/mealie/releases",
+  "license": "AGPL-3.0",
+  "source": "https://github.com/mealie-recipes/mealie",
+  "docs": "https://docs.mealie.io",
+  "postInstall": [
+    "Sign in with changeme@example.com and the password MyPassword, then change both at once in your profile.",
+    "Invite the rest of the household from Settings, Users, or set ALLOW_SIGNUP to true."
+  ],
+  "webUiPort": 9000,
+  "ports": [
+    {
+      "container": 9000,
+      "protocol": "tcp",
+      "label": "Web UI",
+      "hostDefault": 9925
+    }
+  ],
+  "env": [
+    {
+      "key": "ALLOW_SIGNUP",
+      "default": "false",
+      "prompt": "Let visitors create their own account (true or false)"
+    },
+    {
+      "key": "TZ",
+      "default": "Etc/UTC",
+      "prompt": "Time zone (e.g. Europe/Paris)"
+    }
+  ],
+  "volumes": [
+    {
+      "target": "/app/data",
+      "label": "Data",
+      "suggest": "named"
+    }
+  ]
+}

@@ -1,0 +1,82 @@
+{
+  "id": "minecraft-java",
+  "name": "Minecraft Java Edition",
+  "category": "Games",
+  "added": "2026-11-23",
+  "minHsiVersion": "1.92.0",
+  "tagline": "Your own Minecraft server for Java Edition players.",
+  "description": "Runs a Minecraft Java Edition server for you and your friends, using the itzg image: vanilla, Paper, Fabric, Forge and more, with the game downloaded and kept up to date at start.",
+  "website": "https://docker-minecraft-server.readthedocs.io",
+  "image": "itzg/minecraft-server:2026.11.1",
+  "changelog": "https://github.com/itzg/docker-minecraft-server/releases",
+  "license": "Apache-2.0",
+  "source": "https://github.com/itzg/docker-minecraft-server",
+  "docs": "https://docker-minecraft-server.readthedocs.io",
+  "postInstall": [
+    "The first start downloads Minecraft and builds the world: follow it in Logs, it takes a minute or two.",
+    "In Minecraft, choose Multiplayer, Add Server, and enter this server's address with the game port (25565 by default).",
+    "To play from outside your home, forward the game port on your router.",
+    "TYPE picks the server (VANILLA, PAPER, FABRIC, FORGE...) and VERSION a Minecraft release; change them in Apps, Edit, then restart."
+  ],
+  "ports": [
+    {
+      "container": 25565,
+      "protocol": "tcp",
+      "label": "Game",
+      "hostDefault": 25565
+    }
+  ],
+  "env": [
+    {
+      "key": "EULA",
+      "prompt": "Type TRUE to accept the Minecraft EULA (minecraft.net/eula)",
+      "required": true
+    },
+    {
+      "key": "TYPE",
+      "default": "VANILLA",
+      "prompt": "Server type (VANILLA, PAPER, FABRIC, FORGE...)"
+    },
+    {
+      "key": "VERSION",
+      "default": "LATEST",
+      "prompt": "Minecraft version (LATEST or e.g. 1.21.10)"
+    },
+    {
+      "key": "MEMORY",
+      "default": "2G",
+      "prompt": "Memory for the server (e.g. 2G)"
+    },
+    {
+      "key": "DIFFICULTY",
+      "default": "easy",
+      "prompt": "Difficulty (peaceful, easy, normal, hard)"
+    },
+    {
+      "key": "MODE",
+      "default": "survival",
+      "prompt": "Game mode (survival, creative, adventure)"
+    },
+    {
+      "key": "MOTD",
+      "default": "A Minecraft server",
+      "prompt": "Message shown in the server list"
+    },
+    {
+      "key": "OPS",
+      "prompt": "Operators: player names, separated by commas"
+    },
+    {
+      "key": "TZ",
+      "default": "Etc/UTC",
+      "prompt": "Time zone (e.g. Europe/Paris)"
+    }
+  ],
+  "volumes": [
+    {
+      "target": "/data",
+      "label": "World and server files",
+      "suggest": "named"
+    }
+  ]
+}

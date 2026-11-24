@@ -1,0 +1,35 @@
+{
+  "id": "actual-budget",
+  "name": "Actual Budget",
+  "category": "Productivity",
+  "added": "2026-11-23",
+  "tagline": "Envelope budgeting that keeps your finances on your own server.",
+  "description": "Actual is a fast budgeting app built on envelope budgeting: give each part of your income a job, track your accounts, and sync between your devices through your own server.",
+  "website": "https://actualbudget.org",
+  "image": "actualbudget/actual-server:26.11.0",
+  "changelog": "https://actualbudget.org/docs/releases",
+  "license": "MIT",
+  "source": "https://github.com/actualbudget/actual",
+  "docs": "https://actualbudget.org/docs/",
+  "postInstall": [
+    "It needs HTTPS, except when opened from the server itself: put it behind a reverse proxy with a certificate, then enter that address as the port's domain in Apps, Edit, Ports, so Open uses it.",
+    "Then open it and set the server password."
+  ],
+  "webUiPort": 5006,
+  "ports": [
+    {
+      "container": 5006,
+      "protocol": "tcp",
+      "label": "Web UI",
+      "hostDefault": 5006
+    }
+  ],
+  "env": [],
+  "volumes": [
+    {
+      "target": "/data",
+      "label": "Data",
+      "suggest": "named"
+    }
+  ]
+}

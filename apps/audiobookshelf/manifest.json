@@ -1,0 +1,56 @@
+{
+  "id": "audiobookshelf",
+  "name": "Audiobookshelf",
+  "category": "Media",
+  "added": "2026-11-23",
+  "tagline": "Stream your audiobooks and podcasts, and pick up where you left off.",
+  "description": "Audiobookshelf serves your audiobooks and podcasts to its web player and mobile apps, keeps each listener's progress in sync, and downloads new podcast episodes on its own.",
+  "website": "https://www.audiobookshelf.org",
+  "image": "advplyr/audiobookshelf:2.38.0",
+  "changelog": "https://github.com/advplyr/audiobookshelf/releases",
+  "license": "GPL-3.0",
+  "source": "https://github.com/advplyr/audiobookshelf",
+  "docs": "https://www.audiobookshelf.org/docs",
+  "postInstall": [
+    "Open it and create the root account.",
+    "Add a library pointing at /audiobooks or /podcasts, the folders chosen at install."
+  ],
+  "webUiPort": 80,
+  "ports": [
+    {
+      "container": 80,
+      "protocol": "tcp",
+      "label": "Web UI",
+      "hostDefault": 13378
+    }
+  ],
+  "env": [
+    {
+      "key": "TZ",
+      "default": "Etc/UTC",
+      "prompt": "Time zone (e.g. Europe/Paris)"
+    }
+  ],
+  "volumes": [
+    {
+      "target": "/audiobooks",
+      "label": "Audiobooks",
+      "suggest": "place"
+    },
+    {
+      "target": "/podcasts",
+      "label": "Podcasts",
+      "suggest": "place"
+    },
+    {
+      "target": "/config",
+      "label": "Configuration",
+      "suggest": "named"
+    },
+    {
+      "target": "/metadata",
+      "label": "Covers and cache",
+      "suggest": "named"
+    }
+  ]
+}

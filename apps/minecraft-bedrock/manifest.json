@@ -1,0 +1,67 @@
+{
+  "id": "minecraft-bedrock",
+  "name": "Minecraft Bedrock Edition",
+  "category": "Games",
+  "added": "2026-11-23",
+  "minHsiVersion": "1.92.0",
+  "tagline": "A Minecraft server for players on consoles, phones and tablets.",
+  "description": "Runs a Minecraft Bedrock Edition server, the edition played on consoles, phones and tablets, using the itzg image. The official server is downloaded and kept up to date at start.",
+  "website": "https://github.com/itzg/docker-minecraft-bedrock-server",
+  "image": "itzg/minecraft-bedrock-server:2026.11.1",
+  "changelog": "https://github.com/itzg/docker-minecraft-bedrock-server/releases",
+  "license": "MIT",
+  "source": "https://github.com/itzg/docker-minecraft-bedrock-server",
+  "docs": "https://github.com/itzg/docker-minecraft-bedrock-server#readme",
+  "postInstall": [
+    "The first start downloads the server and builds the world: follow it in Logs.",
+    "In Minecraft, open Play, Servers, Add Server, and enter this server's address with the game port (19132 by default).",
+    "To play from outside your home, forward the game port (UDP) on your router."
+  ],
+  "ports": [
+    {
+      "container": 19132,
+      "protocol": "udp",
+      "label": "Game",
+      "hostDefault": 19132
+    }
+  ],
+  "env": [
+    {
+      "key": "EULA",
+      "prompt": "Type TRUE to accept the Minecraft EULA (minecraft.net/eula)",
+      "required": true
+    },
+    {
+      "key": "VERSION",
+      "default": "LATEST",
+      "prompt": "Minecraft version (LATEST or e.g. 1.21.120)"
+    },
+    {
+      "key": "SERVER_NAME",
+      "default": "Dedicated Server",
+      "prompt": "Server name"
+    },
+    {
+      "key": "GAMEMODE",
+      "default": "survival",
+      "prompt": "Game mode (survival, creative, adventure)"
+    },
+    {
+      "key": "DIFFICULTY",
+      "default": "easy",
+      "prompt": "Difficulty (peaceful, easy, normal, hard)"
+    },
+    {
+      "key": "TZ",
+      "default": "Etc/UTC",
+      "prompt": "Time zone (e.g. Europe/Paris)"
+    }
+  ],
+  "volumes": [
+    {
+      "target": "/data",
+      "label": "World and server files",
+      "suggest": "named"
+    }
+  ]
+}
